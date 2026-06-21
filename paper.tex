@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 \usepackage{natbib}
 \graphicspath{{figures/}}
 \captionsetup{font=small,labelfont=bf}
@@ -17,7 +18,7 @@
 ORCID: \href{https://orcid.org/0009-0004-0368-4767}{0009-0004-0368-4767}.
 All code, configuration files, random seeds, and generated output are openly available
 (see Data and Code Availability). Every figure and statistic is reproducible from fixed seeds
-by the scripts \texttt{roadb\_experiments.py} and \texttt{simulation.py}.}}
+by the scripts \texttt{src/roadb\_experiments.py} and \texttt{src/simulation.py}.}}
 \date{\today}
 
 \begin{document}
@@ -30,7 +31,7 @@ Bertrand competition---the environment most hostile to collusion---contrasting a
 $\varepsilon$-greedy Q-learner with a stateless mean-based bandit, and classifying outcomes with a
 model-free, convergence-validated Shannon-entropy diagnostic. Three results emerge. First, the stateless
 learner reaches supra-competitive prices immediately and in $90$--$96\%$ of runs, but only weakly (collusion
-index $\Delta\approx0.13$), whereas the stateful Q-learner converges to competitive pricing at plausible
+index $\Delta\approx0.14$), whereas the stateful Q-learner converges to competitive pricing at plausible
 horizons (only $2\%$ collusive, despite $\approx 90\%$ of runs converging) and learns to collude only
 gradually as the horizon lengthens (to $50\%$ at $10^6$ periods), but intensely ($\Delta$ rising to $0.46$).
 Agent memory, not sophistication, is thus the operative margin, generating a reliability-versus-intensity
@@ -74,7 +75,7 @@ My findings (Section~\ref{sec:results}) overturn the natural ``sophistication dr
 and replace it with a memory-based one.
 
 \textbf{(1) Reliability versus intensity.} The stateless learner reaches supra-competitive prices in
-$90$--$96\%$ of runs and does so immediately, but \emph{weakly}: its collusion index is $\Delta\approx0.13$
+$90$--$96\%$ of runs and does so immediately, but \emph{weakly}: its collusion index is $\Delta\approx0.14$
 (on a $[0,1]$ scale from the discrete Bertrand--Nash benchmark to joint monopoly). The stateful Q-learner,
 at economically plausible horizons, instead \emph{converges to competition}---only $2\%$ of runs collude
 even though $89\%$ converge---and learns to collude only slowly as the horizon grows ($0\%$, $25\%$, $44\%$,
@@ -96,7 +97,7 @@ failure to learn---the standard objection to tabular results
 Q-learner directly, to $10^6$ periods, rather than asserting convergence.
 
 The policy implication is detection-centred. Both spurious and genuine supra-competitive pricing raise
-prices and harm no one's ability to charge them; yet the spurious variety is produced by the
+prices and harm consumers identically; yet the spurious variety is produced by the
 \emph{simplest} learner, arises \emph{fastest}, and---lacking any punishment dynamics---is the hardest to
 distinguish from competition by behavioural signatures. A model-free screen that flags supra-competitive
 \emph{outcomes}, independent of the firm's algorithm, is therefore the appropriate instrument; my entropy
@@ -145,8 +146,8 @@ normalised to one unit, allocated by the Bertrand rule: the lowest-priced firm s
 so firm $i$'s profit is $\pi_i=(p_i-c)\,q_i$ with $q_i=\mathbf 1[p_i=\min_j p_j]/|\arg\min_j p_j|$. Firms
 interact for $T$ periods (baseline $T=3\times10^4$; varied to $10^6$).
 
-\paragraph{The discrete competitive benchmark.} On a discrete grid the static Bertrand--Nash outcome has
-both firms at the lowest grid price weakly above cost, which earns a small but \emph{positive} per-firm
+\paragraph{The discrete competitive benchmark.} On a discrete grid the static Bertrand--Nash outcome
+\citep{tirole1988theory} has both firms at the lowest grid price weakly above cost, which earns a small but \emph{positive} per-firm
 profit unless a grid point coincides with $c$. I therefore anchor the collusion index on the true discrete
 benchmark $\pi^N=(p^{\mathrm{comp}}-c)/2$ with $p^{\mathrm{comp}}=\min\{p\in\mathcal P:p\ge c\}$
 (so $\pi^N=0.33$ at $K=7$ and $\pi^N=0$ at $K=21$, where $p=1$ lies on the grid), and on joint monopoly
@@ -366,7 +367,7 @@ weakened.
 generated Monte Carlo output are openly available in the project repository at
 \url{https://github.com/shubhL-research/algorithmic-bertrand-rl} and archived at
 \url{https://doi.org/10.5281/zenodo.20788510}. Every figure and statistic reported here is reproduced from
-seeds by \texttt{src/roadb\_experiments.py}.
+seeds by \texttt{src/roadb\_experiments.py} and \texttt{src/simulation.py}.
 
 \textbf{Use of AI assistance.} The author used an AI assistant (Claude, Anthropic) to help develop and debug
 the simulation code, run the computational analyses, and prepare the manuscript; the author designed the
