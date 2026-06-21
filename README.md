@@ -17,7 +17,11 @@ normalised index Δ ∈ [0,1] (0 = Bertrand–Nash, 1 = symmetric joint monopoly
    chaotic (non-convergent). Collusion requires a tractable price grid, annealed exploration, and a long
    horizon.
 2. **Sophistication is not the driver.** The *simpler* mean-based bandit colludes **more** (89%) than
-   Q-learning (56%); the Q-learner's bootstrap makes convergence harder.
+   Q-learning (56%); the gap is statistically decisive (two-proportion z = 5.23, p = 1.7×10⁻⁷). The
+   Q-learner's temporal-difference bootstrap makes convergence harder, not easier.
+2b. **Reward–punishment mechanism.** A frozen-policy forced-deviation experiment shows the rival cuts
+   price after an undercut (5.02 → 4.58) and then recovers (5.04) — a modest but systematic punishment
+   strategy.
 3. **Patience governs intensity.** Δ rises monotonically with the discount factor γ (0.23 → 0.45 as
    γ: 0.2 → 0.95) — the folk-theorem mechanism.
 4. **Fragility.** Collusion collapses as the grid fines (57% → 3%), as exploration persists (→ 0%), as the
@@ -28,7 +32,8 @@ normalised index Δ ∈ [0,1] (0 = Bertrand–Nash, 1 = symmetric joint monopoly
 ```bash
 pip install -r requirements.txt
 cd src
-python experiments.py        # ~15 min; regenerates all figures + results/results.json
+python experiments.py        # ~15 min; figures fig1-fig8 + results/results.json
+python mechanism.py          # ~5 min; impulse response (fig9) + Q-vs-mean z-test + results/mechanism.json
 ```
 
 Every result is produced from fixed random seeds; re-running yields identical numbers. Compile the paper
@@ -38,10 +43,11 @@ with `pdflatex paper.tex` (twice).
 
 ```
 src/simulation.py     core model: market, Q-learning (eq. 7), mean-based learner, entropy classifier, Δ
-src/experiments.py    full experiment suite -> figures/ + results/
-figures/              fig1–fig8 (all referenced in the paper)
-results/results.json  all numbers (regime frequencies, SEs, Δ, sensitivity table)
-paper.tex, paper.pdf  the write-up
+src/experiments.py    baseline MC, Q-vs-mean, 3-firm, sensitivity -> fig1-fig8 + results.json
+src/mechanism.py      forced-deviation impulse response + Q-vs-mean z-test -> fig9 + mechanism.json
+figures/              fig1–fig9 (all referenced in the paper)
+results/              results.json, mechanism.json (all numbers, SEs, Δ, test statistics)
+paper.tex, paper.pdf  the write-up (journal-level, 11 pp.)
 ```
 
 ## Model (baseline)

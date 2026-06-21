@@ -52,7 +52,7 @@ def _state_index(opp_idx, K):
 # Learning agents
 # ----------------------------------------------------------------------
 def run_qlearning(n, K, T, alpha, gamma, epsilon, c, grid, rng,
-                  eps_decay=None, memory="opponent"):
+                  eps_decay=None, memory="opponent", return_Q=False):
     """Stateful epsilon-greedy Q-learning.
 
     memory="opponent": state = opponents' previous prices (faithful to the paper text).
@@ -121,6 +121,8 @@ def run_qlearning(n, K, T, alpha, gamma, epsilon, c, grid, rng,
         profit_hist[t] = pr
         states = nstates
 
+    if return_Q:
+        return price_hist, profit_hist, Q
     return price_hist, profit_hist
 
 
