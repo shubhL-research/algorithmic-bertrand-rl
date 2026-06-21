@@ -13,8 +13,8 @@
 \newtheorem{proposition}{Proposition}
 
 \title{\textbf{Learning Dynamics and the Fragility of Algorithmic Collusion\\ in Homogeneous-Good Bertrand Competition}}
-\author{Shubh Lamba\thanks{Maharaja Agrasen Institute of Technology, Delhi. Email:
-\texttt{lambashubh95@gmail.com}. All code, data, and figure-generating scripts are publicly available;
+\author{Shubh Lamba\thanks{Email: \texttt{lambashubh95@gmail.com}.
+All code, data, and figure-generating scripts are publicly available;
 every reported number is produced from fixed random seeds by a single script. I thank the editor and
 referees in advance for comments.}}
 \date{\today}
@@ -24,13 +24,13 @@ referees in advance for comments.}}
 
 \begin{abstract}
 \noindent As firms delegate pricing to autonomous algorithms, whether such algorithms learn to sustain
-supra-competitive prices without instruction has become a first-order question for competition policy. We
+supra-competitive prices without instruction has become a first-order question for competition policy. I
 study this question in the environment least hospitable to it: repeated Bertrand competition with a
 \emph{homogeneous} good, where classical theory predicts marginal-cost pricing from a mere duopoly. Using
 faithful $\varepsilon$-greedy Q-learning---with a temporal-difference update, a discount factor, and state
-given by rivals' previous prices---together with a stateless mean-based (bandit) benchmark, we run $100$
+given by rivals' previous prices---together with a stateless mean-based (bandit) benchmark, I run $100$
 independent simulations per configuration and classify outcomes by a Shannon-entropy measure of price
-dispersion into competitive, collusive, and chaotic regimes. We report four results. (i) Supra-competitive
+dispersion into competitive, collusive, and chaotic regimes. I report four results. (i) Supra-competitive
 collusion does arise even with homogeneous goods---in $56\%$ of baseline duopoly runs, at roughly half the
 monopoly markup ($\Delta\approx0.43$)---but it is \emph{conditional}: the remaining runs fail to converge
 (chaotic), and collusion requires a tractable action space, annealed exploration, and a long horizon.
@@ -63,23 +63,23 @@ competition authorities \citep{harrington2018,ezrachi2016}.
 
 The influential study of \citet{calvano2020} showed, in a \emph{differentiated}-product duopoly, that
 $Q$-learning agents converge to supra-competitive prices and sustain them with reward--punishment
-strategies resembling those of repeated-game theory. We ask whether this phenomenon survives in the
+strategies resembling those of repeated-game theory. I ask whether this phenomenon survives in the
 \emph{homogeneous}-good environment, where the competitive force is strongest and the Bertrand paradox
 binds. The choice of environment is deliberate and consequential: collusion ``even here'' would be a
 stronger and more alarming finding, whereas its failure or fragility here would sharply delimit the scope
 of the algorithmic-collusion concern.
 
-We implement two learning rules in a repeated homogeneous-good Bertrand game. The first is faithful
+I implement two learning rules in a repeated homogeneous-good Bertrand game. The first is faithful
 $\varepsilon$-greedy $Q$-learning, with a temporal-difference update (equation~\eqref{eq:q}), a discount
 factor $\gamma$, and a state equal to rivals' prices in the previous period. The second is a stateless
 mean-based learner---a multi-armed bandit that values each price by its historical average payoff, without
 discounting, state, or temporal-difference bootstrapping. Comparing the two isolates the contribution of
-$Q$-learning's additional machinery. For each parameter configuration we run $100$ independent simulations,
+$Q$-learning's additional machinery. For each parameter configuration I run $100$ independent simulations,
 classify each by a Shannon-entropy measure of price dispersion into one of three regimes
 (competitive, collusive, chaotic), and summarise the degree of coordination by a normalised collusion
 index $\Delta\in[0,1]$ running from Bertrand--Nash ($0$) to symmetric joint monopoly ($1$).
 
-\paragraph{Findings.} Our results revise, rather than echo, the differentiated-good literature.
+\paragraph{Findings.} My results revise, rather than echo, the differentiated-good literature.
 
 \emph{First, collusion is real but conditional.} Under the baseline duopoly, $56\%$ ($\pm5.0$) of runs are
 collusive at a mean index $\Delta\approx0.43$---about half-way to joint monopoly---while $44\%$ fail to
@@ -95,7 +95,7 @@ coordination is therefore a generic tendency of independent payoff maximisation,
 advanced reinforcement learning.
 
 \emph{Third, the punishment mechanism is present but modest.} Freezing a converged collusive policy and
-forcing a one-period undercut, we observe the rival cut its price in response and then return to the
+forcing a one-period undercut, I observe the rival cut its price in response and then return to the
 collusive level---a reward--punishment-and-recovery pattern, though the punishment is shallow.
 
 \emph{Fourth, the comparative statics are sharp and theory-consistent.} Collusion intensity rises
@@ -122,7 +122,7 @@ and Section~\ref{sec:conc} concludes.
 \section{Related Literature}\label{sec:lit}
 The paper connects three strands. The first is classical Bertrand theory: the paradox of
 \citet{bertrand1883} and \citet{tirole1988}, and its relaxations through differentiation
-\citep{hotelling1929}, capacity \citep{edgeworth1925}, and repeated interaction \citep{ivaldi2003}. We add
+\citep{hotelling1929}, capacity \citep{edgeworth1925}, and repeated interaction \citep{ivaldi2003}. I add
 adaptive algorithmic learning as a further channel, and---unlike the classical relaxations---find it
 operative only conditionally in the homogeneous case.
 
@@ -130,18 +130,18 @@ The second strand is the algorithmic-collusion literature. \citet{calvano2020} i
 $Q$-learning collusion with differentiated products and reward--punishment strategies. \citet{klein2021}
 establishes collusion under sequential (rather than simultaneous) pricing; \citet{brown2023} study
 competition between pricing algorithms from a design perspective; and \citet{assad2024} provide empirical
-evidence from retail gasoline that algorithmic adoption raised margins. Relative to this work, our
-contribution is threefold: we push the analysis to the homogeneous-good limit, we provide an
-entropy-based regime classifier, and we document that the \emph{simpler} learner colludes more---reframing
+evidence from retail gasoline that algorithmic adoption raised margins. Relative to this work, my
+contribution is threefold: I push the analysis to the homogeneous-good limit, I provide an
+entropy-based regime classifier, and I document that the \emph{simpler} learner colludes more---reframing
 the phenomenon as independent of algorithmic sophistication.
 
 The third strand is learning in games. \citet{watkins1992} introduce $Q$-learning; \citet{waltman2008}
-show that multi-agent $Q$-learning may cycle rather than converge---precisely the chaotic regime we find
-to be dominant under fine grids and short horizons. Our results are consistent with this non-convergence
+show that multi-agent $Q$-learning may cycle rather than converge---precisely the chaotic regime I find
+to be dominant under fine grids and short horizons. My results are consistent with this non-convergence
 being the default, and collusion the exception, in the homogeneous environment.
 
 \section{Model}\label{sec:model}
-We consider a repeated Bertrand pricing game with $n\in\{2,3\}$ firms producing a homogeneous good. Each
+I consider a repeated Bertrand pricing game with $n\in\{2,3\}$ firms producing a homogeneous good. Each
 firm $i$ chooses a price $p_i$ from a finite, evenly spaced grid
 \[
 \mathcal P=\{p_{\min},\,p_{\min}+\Delta,\,\dots,\,p_{\max}\},\qquad
@@ -173,7 +173,7 @@ equilibrium. Pricing below $c$ yields negative profit whenever the firm wins. Th
 is $p_i=c$.
 \end{proof}
 
-We summarise the degree of collusion in any run by the normalised index
+I summarise the degree of collusion in any run by the normalised index
 \begin{equation}
 \Delta=\frac{\bar\pi-\pi^{N}}{\pi^{M}-\pi^{N}},\qquad \pi^{N}=0,\quad \pi^{M}=\frac{p_{\max}-c}{n},
 \label{eq:delta}
@@ -217,7 +217,7 @@ convergence, the multi-agent cycling anticipated by \citet{waltman2008}.
 \label{fig:regimes}
 \end{figure}
 
-To classify runs without manual inspection we compute, over the final $T_0$ periods, the empirical price
+To classify runs without manual inspection I compute, over the final $T_0$ periods, the empirical price
 distribution $f^i(p)$ of each agent and its Shannon entropy $H^i=-\sum_{p}f^i(p)\log_2 f^i(p)$, and average
 across agents to $\bar H=\tfrac1n\sum_i H^i$. With $\bar p$ the mean price over the window, the regime is
 \begin{equation}
@@ -288,8 +288,8 @@ gap is significant at $z=5.23$ ($p<10^{-6}$).}\label{fig:qvm}
 
 \section{The Reward--Punishment Mechanism}\label{sec:mech}
 Is collusive convergence supported by a strategic punishment of deviations, or merely by both agents
-independently favouring high prices? To distinguish these we run a frozen-policy deviation experiment.
-Taking each converged collusive run, we freeze the learned $Q$-tables (greedy play, no further learning),
+independently favouring high prices? To distinguish these I run a frozen-policy deviation experiment.
+Taking each converged collusive run, I freeze the learned $Q$-tables (greedy play, no further learning),
 verify steady collusive pricing, then force one firm to undercut to the lowest price for a single period
 and trace the subsequent path. Averaging over $40$ collusive runs (Figure~\ref{fig:impulse}), the rival
 responds to the undercut by cutting its own price---from a pre-deviation level of $5.02$ to a trough of
@@ -321,7 +321,7 @@ playing the role of patience, despite having no representation of repeated-game 
 \end{figure}
 
 \section{Robustness and the Fragility of Collusion}\label{sec:robust}
-Table~\ref{tab:sens} reports the collusive share and the mean index as we vary, one parameter at a time,
+Table~\ref{tab:sens} reports the collusive share and the mean index as I vary, one parameter at a time,
 the discount factor, exploration schedule, grid granularity, horizon, and number of firms ($30$ runs per
 cell). Four comparative statics stand out, each in the direction theory predicts and each delimiting when
 collusion is sustainable.
@@ -406,23 +406,23 @@ exploration, a long horizon, and few firms, and collapses otherwise. The differe
 
 For enforcement, the conduct-based framework that requires proof of an agreement is ill-suited to a setting
 in which coordination emerges from independent learning with no communication
-\citep{harrington2018,ezrachi2016}; an effects-based posture is more appropriate. Our comparative statics
-point to observable, structural levers: exploration floors (which we find directly prevent convergence to
+\citep{harrington2018,ezrachi2016}; an effects-based posture is more appropriate. My comparative statics
+point to observable, structural levers: exploration floors (which I find directly prevent convergence to
 collusion), market-structure thresholds (collusion vanishes at three firms), and limits on the granularity
 of admissible price grids.
 
 \paragraph{Limitations.} The analysis is computational and offers no convergence proofs; multi-agent
-$Q$-learning is known to cycle rather than converge in general \citep{waltman2008}, which our chaotic
-regime reflects. We restrict attention to homogeneous goods, inelastic demand, tabular learners, and
+$Q$-learning is known to cycle rather than converge in general \citep{waltman2008}, which my chaotic
+regime reflects. I restrict attention to homogeneous goods, inelastic demand, tabular learners, and
 memory-one state; richer demand systems, deep reinforcement learning, longer memory, and asymmetric costs
 or algorithms are natural extensions. Reported regime frequencies depend on the thresholds $(H^\ast,p^\ast)$
-in \eqref{eq:rule}; we therefore emphasise the comparative statics, which are robust to moderate threshold
+in \eqref{eq:rule}; I therefore emphasise the comparative statics, which are robust to moderate threshold
 variation, over any single frequency. Finally, the baseline employs a coarse price grid to ensure
 convergence within a feasible horizon; the grid-sensitivity results show that finer grids do not overturn
 the qualitative findings but do require correspondingly longer horizons.
 
 \section{Conclusion}\label{sec:conc}
-Implementing faithful $Q$-learning and a mean-based benchmark in homogeneous-good Bertrand competition, we
+Implementing faithful $Q$-learning and a mean-based benchmark in homogeneous-good Bertrand competition, I
 find that supra-competitive collusion does emerge---in a majority of converged duopoly runs, at about half
 the monopoly markup---but that it is conditional rather than universal, that it does not require
 algorithmic sophistication (a simple bandit colludes significantly more), that it is supported by a modest
