@@ -1,64 +1,67 @@
-# Learning Dynamics in Algorithmic Bertrand Competition
+# The Two Faces of Algorithmic Collusion
 
-Reproducible code and paper for a computational study of reinforcement-learning agents in repeated
-**homogeneous-good** Bertrand competition — the environment in which classical theory predicts the
-sharpest competitive outcome (marginal-cost pricing).
+Reproducible code and paper for a computational study of **agent memory** in homogeneous-good Bertrand
+competition: when do pricing algorithms reach supra-competitive prices, and is that coordination *genuine*
+(strategically punished) or *spurious* (a stateless artifact)?
 
-**Author:** Shubh Lamba · **Paper:** [`paper.pdf`](paper.pdf)
+**Author:** Shubh Lamba · **Paper:** [`paper.pdf`](paper.pdf) (10 pp.)
 
-## Summary of findings
+## Findings
 
-Faithful ε-greedy Q-learning (temporal-difference update, discount factor, state = rivals' previous
-prices) and a stateless mean-based (bandit) benchmark, 100 independent runs per configuration, classified
-into competitive / collusive / chaotic regimes by a Shannon-entropy measure. Collusion is summarised by a
-normalised index Δ ∈ [0,1] (0 = Bertrand–Nash, 1 = symmetric joint monopoly).
+A stateful ε-greedy **Q-learner** (state = rival's previous price) is contrasted with a stateless
+**mean-based bandit**, on a homogeneous-good Bertrand grid, classified by a model-free,
+**convergence-validated** Shannon-entropy diagnostic. 100 seeded runs per cell; horizon ladder to 10⁶.
 
-1. **Collusion is real but conditional.** 56% of baseline duopoly runs collude (Δ ≈ 0.43); 44% are
-   chaotic (non-convergent). Collusion requires a tractable price grid, annealed exploration, and a long
-   horizon.
-2. **Sophistication is not the driver.** The *simpler* mean-based bandit colludes **more** (89%) than
-   Q-learning (56%); the gap is statistically decisive (two-proportion z = 5.23, p = 1.7×10⁻⁷). The
-   Q-learner's temporal-difference bootstrap makes convergence harder, not easier.
-2b. **Reward–punishment mechanism.** A frozen-policy forced-deviation experiment shows the rival cuts
-   price after an undercut (5.02 → 4.58) and then recovers (5.04) — a modest but systematic punishment
-   strategy.
-3. **Patience governs intensity.** Δ rises monotonically with the discount factor γ (0.23 → 0.45 as
-   γ: 0.2 → 0.95) — the folk-theorem mechanism.
-4. **Fragility.** Collusion collapses as the grid fines (57% → 3%), as exploration persists (→ 0%), as the
-   horizon shortens (→ 10%), and as a third firm is added (→ 0%).
+1. **Reliability vs. intensity.** The *stateless* learner reaches supra-competitive prices immediately and
+   almost always (90–96% of runs) but **weakly** (collusion index Δ≈0.13). The *stateful* learner
+   **converges to competition** at normal horizons (2% collusive despite 89% convergence) and learns to
+   collude only slowly as the horizon grows (0→25→44→50% at T = 3×10⁴ → 10⁶), but **intensely** (Δ→0.46).
+   **Memory, not sophistication, is the operative margin.**
+2. **Spurious vs. genuine.** A forced-deviation test: the Q-learner punishes a deviation sharply (rival
+   price 5.61→4.05 vs. a 0.45 no-deviation band) — genuine, punishment-supported collusion. The mean-based
+   learner cannot punish (response amplitude **0.00**) — structurally spurious coordination.
+3. **No convergence artifact.** Because the stateless learner *converges* and still colludes, its advantage
+   is not the usual "tabular Q-learning didn't finish learning" artifact.
 
-## Reproduce everything
+Policy reading: the most reliable coordination is the most spurious and least detectable, so an
+outcome-based, **algorithm-agnostic** screen (like the entropy diagnostic here) is the appropriate
+instrument.
+
+## Reproduce
 
 ```bash
 pip install -r requirements.txt
-cd src
-python experiments.py        # ~15 min; figures fig1-fig8 + results/results.json
-python mechanism.py          # ~5 min; impulse response (fig9) + Q-vs-mean z-test + results/mechanism.json
+cd src && python roadb_experiments.py     # ~50 min; regenerates results/roadb.json + figures/rb_fig1-5
+pdflatex paper.tex && bibtex paper && pdflatex paper.tex && pdflatex paper.tex
 ```
 
-Every result is produced from fixed random seeds; re-running yields identical numbers. Compile the paper
-with `pdflatex paper.tex` (twice).
+Every result is produced from fixed random seeds; re-running is identical.
 
-## Repository layout
+## Layout
 
 ```
-src/simulation.py     core model: market, Q-learning (eq. 7), mean-based learner, entropy classifier, Δ
-src/experiments.py    baseline MC, Q-vs-mean, 3-firm, sensitivity -> fig1-fig8 + results.json
-src/mechanism.py      forced-deviation impulse response + Q-vs-mean z-test -> fig9 + mechanism.json
-figures/              fig1–fig9 (all referenced in the paper)
-results/              results.json, mechanism.json (all numbers, SEs, Δ, test statistics)
-paper.tex, paper.pdf  the write-up (journal-level, 11 pp.)
+src/config.py            single source of truth for the baseline (K, T, alpha, gamma, eps, ...)
+src/simulation.py        market, Q-learning (eq. 2), mean-based bandit, corrected discrete-Nash Delta,
+                         convergence diagnostics, K-normalised bias-corrected entropy
+src/roadb_experiments.py the full suite: convergence-conditional comparison, matched exploration,
+                         split-gamma, classifier validation, impulse test, horizon ladder
+figures/rb_fig1-5.png    the five figures in the paper
+results/roadb.json       all numbers; results/citations.md = annotated bibliography
+paper.tex, references.bib, paper.pdf
 ```
 
 ## Model (baseline)
 
-n = 2 firms, homogeneous good, marginal cost c = 1, inelastic unit demand, price grid [0, 10] with K = 7
-points; α = 0.10, γ = 0.95, annealed ε (ε₀ = 0.10, δ = 3×10⁻⁴), T = 30,000; classification window
-T₀ = 2,000; thresholds H\* = 1.0, p\* = 2.0. The Q-update is
+n = 2 firms, homogeneous good, marginal cost c = 1, inelastic unit demand, price grid [0,10] with K = 21
+(coarse contrast K = 7); α = 0.10, γ = 0.95, annealed ε (ε₀ = 0.10, δ = 3×10⁻⁴), T = 30,000 (swept to
+10⁶); classification window T₀ = 2,000; entropy threshold H\* = 0.288 (data-derived antimode). The Q-update is
 
 ```
-Q(s,a) <- Q(s,a) + alpha * [ pi + gamma * max_a' Q(s',a') - Q(s,a) ],   s = rivals' previous prices.
+Q(s,a) <- Q(s,a) + alpha * [ pi + gamma * max_a' Q(s',a') - Q(s,a) ],   s = rival's previous price.
 ```
+
+The collusion index Δ ∈ [0,1] is anchored on the true **discrete** Bertrand-Nash profit (not zero) and the
+joint-monopoly profit, computed on converged runs.
 
 ## License
 

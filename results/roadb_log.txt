@@ -1,0 +1,25 @@
+[D0] calibration pool -> data-derived H* ...
+      data-derived H* (K-normalised entropy) = 0.288
+[A] baseline convergence-conditional Q vs mean (K=7, K=21; 100 runs) ...
+      q K=7: collusive all=52% conv-only=66.66666666666667% conv-rate=48% Delta(conv)=0.41357499999999997
+      mean K=7: collusive all=86% conv-only=85.85858585858585% conv-rate=99% Delta(conv)=0.19814949494949494
+      q K=21: collusive all=2% conv-only=2.247191011235955% conv-rate=89% Delta(conv)=0.3462852684144819
+      mean K=21: collusive all=94% conv-only=93.4065934065934% conv-rate=91% Delta(conv)=0.14461019536019534
+[B] matched exploration ...
+      annealed: Q=2% mean=94%
+      constant: Q=0% mean=86%
+[C] split gamma (share vs intensity) ...
+      gamma=0.2: share=46% Delta(conv)=0.20733333333333334
+      gamma=0.5: share=26% Delta(conv)=0.31682407407407415
+      gamma=0.8: share=6% Delta(conv)=0.3464238505747126
+      gamma=0.95: share=2% Delta(conv)=0.3462852684144819
+[D] classifier validation: (Delta,H) scatter + threshold sensitivity ...
+[E] impulse test for BOTH learners + no-deviation counterfactual ...
+      Q: rival pre=5.61 trough=4.05 nodev-amp=0.45 | mean: pre=2.42 trough=2.42 nodev-amp=0.00
+[F] HORIZON LADDER to 1e6 (the convergence-artifact kill shot) ...
+      T=30000: Q share=0% (conv 92%) mean share=96% (50s)
+      T=100000: Q share=25% (conv 75%) mean share=96% (160s)
+      T=300000: Q share=44% (conv 69%) mean share=94% (325s)
+      T=1000000: Q share=50% (conv 70%) mean share=90% (678s)
+
+DONE in 3140s. H*=0.288. results/roadb.json + 5 figures.
