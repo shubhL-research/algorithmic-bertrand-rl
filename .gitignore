@@ -6,3 +6,6 @@ __pycache__/
 *.bbl
 *.blg
 results/run_log.txt
+src/roadA_gate.py
+results/roadA_gate.txt
+src/_count.py
